@@ -69,7 +69,7 @@ var FormRenderer = BasicRenderer.extend({
             var widgets = this.allFieldWidgets[this.state.id];
             for (var i = 0; i < (widgets ? widgets.length : 0); i++) {
                 var widget = widgets[i];
-                if (widget.isFocusable()) {
+		if (typeof variable !== 'undefined' && widget.isFocusable()) {
                     focusWidget = widget;
                     break;
                 }
