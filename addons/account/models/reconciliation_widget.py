@@ -72,10 +72,14 @@ class AccountReconciliation(models.AbstractModel):
 
         if partner_id is None:
             partner_id = st_line.partner_id.id
-
+        print("get_move_lines_for_bank_statement_line", st_line, partner_id, st_line.partner_id)
+        #partner_id = False
         domain = self._domain_move_lines_for_reconciliation(st_line, aml_accounts, partner_id, excluded_ids=excluded_ids, search_str=search_str)
         recs_count = self.env['account.move.line'].search_count(domain)
+        print("SEARCH =========================================")
+        print(domain, offset, limit, recs_count)
         aml_recs = self.env['account.move.line'].search(domain, offset=offset, limit=limit, order="date_maturity desc, id desc")
+        print("aml_recs", aml_recs)
         target_currency = st_line.currency_id or st_line.journal_id.currency_id or st_line.journal_id.company_id.currency_id
         return self._prepare_move_lines(aml_recs, target_currency=target_currency, target_date=st_line.date, recs_count=recs_count)
 
@@ -239,7 +243,6 @@ class AccountReconciliation(models.AbstractModel):
         Account_move_line = self.env['account.move.line']
         Account = self.env['account.account']
         Currency = self.env['res.currency']
-
         domain = self._domain_move_lines_for_manual_reconciliation(account_id, partner_id, excluded_ids, search_str)
         recs_count = Account_move_line.search_count(domain)
         lines = Account_move_line.search(domain, offset=offset, limit=limit, order="date_maturity desc, id desc")
