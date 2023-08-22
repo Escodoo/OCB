@@ -143,6 +143,7 @@ class IrAttachment(models.Model):
             if not os.path.isdir(dirname):
                 with tools.ignore(OSError):
                     os.makedirs(dirname)
+            print("mark for gc", full_path)
             open(full_path, 'ab').close()
 
     @api.model
