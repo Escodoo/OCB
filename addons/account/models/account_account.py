@@ -581,7 +581,8 @@ class AccountGroup(models.Model):
         self.env.cr.execute(query, {'ids': tuple(self.ids)})
         res = self.env.cr.fetchall()
         if res:
-            raise ValidationError(_('Account Groups with the same granularity can\'t overlap'))
+            # raise ValidationError(_('Account Groups with the same granularity can\'t overlap'))
+            pass
 
     @api.model_create_multi
     def create(self, vals_list):
